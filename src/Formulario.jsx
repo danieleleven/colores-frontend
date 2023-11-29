@@ -8,7 +8,18 @@ export default function Formulario(){
 
     return (<form onSubmit={ evento => {
                         evento.preventDefault()
-                        console.log(textoInput)
+                        
+                        setError(false)
+
+                        let valido = /^(\d{1,3},){2}\d{1,3}$/.test(textoInput)
+
+                        if(valido){
+
+                            textoInput.split(",").forEach( n => valido = valido && +n >= 0 && +n <= 255)
+
+                           
+                        }
+
                     } }>
 
                 <input 
@@ -18,7 +29,7 @@ export default function Formulario(){
                         onChange={ evento => {
                             setTextoInput(evento.target.value)
                         } }
-                    />
+                />
                 <p className={ `error ${ error ? "visible" : "" }` }>x error</p>
                 <input type="submit" value="crear color" />
 
