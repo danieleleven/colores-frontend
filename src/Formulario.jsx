@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function Formulario(){
+export default function Formulario({agregarColor}){
 
 
     let [error,setError] = useState(false)
@@ -15,10 +15,35 @@ export default function Formulario(){
 
                         if(valido){
 
-                            textoInput.split(",").forEach( n => valido = valido && +n >= 0 && +n <= 255)
+                            let [r,g,b] = textoInput.split(",").map(n => +n);// explicaria el uso de punto y coma
 
+                            [r,g,b].forEach( n => valido = valido && n >= 0 && n <= 255)
+
+                           if(valido){
+
+                            return fetch("http://localhost:3000/nuevo", {
+                                method : "POST",
+                                body : JSON.stringify({r,g,b}),
+                                headers : {
+                                    "Content-type" : "application/json"
+                                }
+                            })
+                            .then(respuesta => respuesta.json())
+                            .then(respuesta => {
+                                let {resultado,_id} = respuesta
+
+                                if(_id){
+                                    setTextoInput("")
+                                    return agregarColor({_id,r,g,b})
+                                }
+
+                                console.log("mostrar error al usuario")
+                            })
+                           }
                            
                         }
+
+                        setError(true)
 
                     } }>
 
