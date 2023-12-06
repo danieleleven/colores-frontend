@@ -7,7 +7,7 @@ function Colores(){
     let [colores,setColores] = useState([])
 
     useEffect(() => {
-        fetch("http://localhost:3000")
+        fetch("http://colores-back.onrender.com")
         .then(respuesta => respuesta.json())
         .then(coloresApi => {
             
@@ -20,7 +20,7 @@ function Colores(){
     }
 
     function borrarColor(id){
-        fetch(`http://localhost:3000/borrar/${id}`,{ method : "DELETE" })
+        fetch(`http://colores-back.onrender.com/borrar/${id}`,{ method : "DELETE" })
         .then(respuesta => respuesta.json())
         .then(respuesta => {
             let {resultado} = respuesta

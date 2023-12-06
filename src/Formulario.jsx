@@ -21,7 +21,7 @@ export default function Formulario({agregarColor}){
 
                            if(valido){
 
-                            return fetch("http://localhost:3000/nuevo", {
+                            return fetch("http://colores-back.onrender.com/nuevo", {
                                 method : "POST",
                                 body : JSON.stringify({r,g,b}),
                                 headers : {
